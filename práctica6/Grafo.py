@@ -52,6 +52,46 @@ class Grafo:
 
         for key in sorted(list(self.vertices.keys())):
             print(f"La distancia de {vertice.nombre} a { key } es {str(self.vertices[key].distancia)}")
+
+    
+    def timesBFS(self, vertice : Vertice) -> int:
+        
+        vertice.distancia = 0
+        vertice.color = "gris"
+        vertice.pred = -1
+
+        lista = list()
+        lista.append(vertice.nombre)
+
+        times = 0
+
+        while len(lista) > 0:
+
+            times += 1
+
+            u = lista.pop()
+
+            node_u = self.vertices[u]
+            
+            for v in node_u.vecinos:
+
+                times += 1
+
+                node_v = self.vertices[v]
+
+                if node_v.color == "blanco":
+                    node_v.color = "gris"
+                    node_v.distancia = node_u.distancia + 1
+                    node_v.pred = node_u.nombre
+                    lista.append(v)
+            
+            self.vertices[u].color = "black"
+
+        for key in sorted(list(self.vertices.keys())):
+            print(f"La distancia de {vertice.nombre} a { key } es {str(self.vertices[key].distancia)}")
+
+        return times
+
     
     def imprimirGrafo(self) -> None:
         for key in sorted(list(self.vertices.keys())):
