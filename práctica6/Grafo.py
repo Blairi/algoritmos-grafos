@@ -3,6 +3,9 @@ from Vertice import Vertice
 class Grafo:
     vertices = {}
 
+    def __init__(self) -> None:
+        self.vertices = {}
+
     def agregarVertice(self, vertice : Vertice) -> bool:
 
         if isinstance(vertice, Vertice) and vertice.nombre not in self.vertices:
@@ -56,6 +59,8 @@ class Grafo:
     
     def timesBFS(self, vertice : Vertice) -> int:
         
+        times = 0
+
         vertice.distancia = 0
         vertice.color = "gris"
         vertice.pred = -1
@@ -63,7 +68,6 @@ class Grafo:
         lista = list()
         lista.append(vertice.nombre)
 
-        times = 0
 
         while len(lista) > 0:
 
@@ -87,8 +91,8 @@ class Grafo:
             
             self.vertices[u].color = "black"
 
-        for key in sorted(list(self.vertices.keys())):
-            print(f"La distancia de {vertice.nombre} a { key } es {str(self.vertices[key].distancia)}")
+        # for key in sorted(list(self.vertices.keys())):
+        #     print(f"La distancia de {vertice.nombre} a { key } es {str(self.vertices[key].distancia)}")
 
         return times
 

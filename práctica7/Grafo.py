@@ -5,6 +5,10 @@ class Grafo:
     vertices = {}
     tiempo = 0
 
+    def __init__(self) -> None:
+        self.vertices = {}
+        self.tiempo = 0
+
     def agregarVertice(self, vertice):
         if isinstance(vertice, Vertice) and vertice.nombre not in self.vertices:
             self.vertices[vertice.nombre] = vertice
@@ -48,6 +52,42 @@ class Grafo:
         vert.color = "black"
         tiempo = tiempo + 1
         vert.f = tiempo
+
+    
+    def timesDFS(self):
+        times = 0
+
+        global tiempo
+        tiempo = 0
+        for u in sorted(list( self.vertices.keys() )):
+            times += 1
+            if self.vertices[u].color == "white":
+                times += self.timesDfsVisitar(self.vertices[u])
+
+        return times
+
+    
+    def timesDfsVisitar(self, vert):
+        times = 0
+        times += 1
+        
+        global tiempo
+        tiempo = tiempo + 1
+        vert.d = tiempo
+        vert.color = "gris"
+
+        for v in vert.vecinos:
+            times += 1
+
+            if self.vertices[v].color == "white":
+                self.vertices[v].pred = vert
+                times += self.dfsVisitar(self.vertices[v])
+        
+        vert.color = "black"
+        tiempo = tiempo + 1
+        vert.f = tiempo
+
+        return times
 
     
     def imprimeGrafo(self):
